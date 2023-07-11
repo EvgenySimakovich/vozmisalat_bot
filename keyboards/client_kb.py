@@ -1,13 +1,18 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 
-mainmenu_buttons = [
+client_menu_buttons = [
     [
-        KeyboardButton(text='О нас'),
-        KeyboardButton(text='Адрес')
-    ]
+        KeyboardButton(text='Адрес'),
+        KeyboardButton(text='Время работы'),
+    ],
+    [
+        KeyboardButton(text='Копить бонусы'),
+        KeyboardButton(text='Меню'),
+        KeyboardButton(text='Доставка'),
+    ],
 ]
 
 client_keyboard = ReplyKeyboardMarkup(
-    keyboard=mainmenu_buttons,
-    resize_keyboard=True
+    keyboard=client_menu_buttons,
+    resize_keyboard=True,
 )

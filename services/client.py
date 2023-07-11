@@ -9,6 +9,12 @@ async def get_user(telegram_id: int, session):
 
 
 @get_session
+async def get_users(session):
+    users = session.query(User).all()
+    return users
+
+
+@get_session
 async def add_user(telegram_id: int, username: str, session) -> None:
     user_data = {
         'telegram_id': telegram_id,
