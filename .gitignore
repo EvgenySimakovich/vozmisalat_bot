@@ -2,6 +2,7 @@ venv
 .idea
 cenz
 __pycache__
+test_module
 database/__pycache__
 handlers/__pycache__
 keyboards/__pycache__
