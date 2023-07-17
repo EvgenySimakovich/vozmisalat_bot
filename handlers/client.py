@@ -71,10 +71,12 @@ async def about_handler(message: Message):
         match promo:
             case "x10group":
                 await message.answer(text='Программа лояльности <a href="https://sabyget.ru/go/lHTSvj">Возьми Салат</a>',
-                                     parse_mode='HTML')
+                                     parse_mode='HTML',
+                                     disable_web_page_preview=True)
             case _:
                 await message.answer(text='Программа лояльности <a href="https://sabyget.ru/go/FmJT7M">Возьми Салат</a>',
-                                     parse_mode='HTML')
+                                     parse_mode='HTML',
+                                     disable_web_page_preview=True)
         await message.delete()
     except Exception as e:
         print(e)
@@ -84,7 +86,8 @@ async def about_handler(message: Message):
 async def about_handler(message: Message):
     try:
         await message.answer(text='<a href="https://sabyget.ru/delivery/vozmisalat_lad">Вот здесь</a> можно посмотреть меню и сделать заказ',
-                             parse_mode='HTML')
+                             parse_mode='HTML',
+                             disable_web_page_preview=True)
         await message.delete()
     except Exception as e:
         print(e)
