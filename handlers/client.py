@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.filters import Command, Text
+from aiogram.filters import CommandStart, Text
 from aiogram.types import Message, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
@@ -9,7 +9,7 @@ from keyboards import client_keyboard
 router = Router()
 
 
-@router.message(Command('start'))
+@router.message(CommandStart())
 async def command_start(message: Message):
     user_id = message.from_user.id
     username = message.from_user.username

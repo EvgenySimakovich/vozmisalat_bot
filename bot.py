@@ -12,6 +12,7 @@ load_dotenv()
 API_TOKEN = os.getenv('API_TOKEN')
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
+dp = Dispatcher(storage=MemoryStorage())
 
 
 async def on_startup():
@@ -21,7 +22,6 @@ async def on_startup():
 
 async def main():
 
-    dp = Dispatcher(storage=MemoryStorage())
     dp.startup.register(on_startup)
     dp.include_router(client.router)
     dp.include_router(other.router)
