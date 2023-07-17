@@ -15,10 +15,11 @@ async def get_users(session):
 
 
 @get_session
-async def add_user(telegram_id: int, username: str, session) -> None:
+async def add_user(telegram_id: int, username: str, session, promo=None) -> None:
     user_data = {
         'telegram_id': telegram_id,
         'username': username,
+        'promo': promo,
     }
     new_user = User(**user_data)
     session.add(new_user)
@@ -33,5 +34,9 @@ async def add_promo():
     pass
 
 
-async def get_promo():
-    pass
+@get_session
+async def get_user_promo(telegram_id: int, session):
+    user = session.query(User).filter_by(telegram_id=telegram_id).one_or_none()
+    return user.promo
+
+

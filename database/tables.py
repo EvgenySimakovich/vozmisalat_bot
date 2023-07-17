@@ -14,9 +14,7 @@ class User(Base):
     telegram_id: Mapped[int] = mapped_column(unique=True)
     username: Mapped[str] = mapped_column(String(30))
     is_created: Mapped[datetime] = mapped_column(insert_default=datetime.now())
+    promo: Mapped[str] = mapped_column(String(20), nullable=True)
 
     def __repr__(self) -> str:
         return f'User (id={self.id!r}, name={self.username!r})'
-
-
-

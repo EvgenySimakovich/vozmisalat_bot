@@ -14,20 +14,30 @@ async def command_start(message: Message):
     user_id = message.from_user.id
     username = message.from_user.username
 
+    # ?start=start_promo
+    start_promo = message.text[7:].lower()
+
     if await client.get_user(telegram_id=user_id):
         await message.answer(text=f'{username}, рады вновь видеть Вас!\n'
                                   f'Мы по-прежнему одни из немногих готовим полезную еду вкусно ☺️',
                              reply_markup=client_keyboard)
         await message.delete()
     else:
+        # Проверка наличия промокода при подключения нового пользователя к боту
+        match start_promo:
+            case "x10group":
+                promo = 'ПЕРВЫЙ'
+            case _:
+                promo = 'НОВЫЙ'
+
         await message.answer(text=f'{username}, спасибо, что подписались на наш канал!\n\n'
                                   f'Мы всегда рады новым гостям, ведь мы одни из немногих готовим полезную еду вкусно ☺️\n'
                                   f'Ну и, конечно, подарочки!\n'
-                                  f'При <a href="https://sabyget.ru/delivery/vozmisalat_lad">заказе наших блюд на доставку</a> укажите в специальном поле промо НОВЫЙ и получите скидку 15% на весь заказ!',
+                                  f'При <a href="https://sabyget.ru/delivery/vozmisalat_lad">заказе наших блюд на доставку</a> укажите в специальном поле промо {promo} и получите скидку 15% на весь заказ!',
                              parse_mode='HTML',
                              reply_markup=client_keyboard,
                              disable_web_page_preview=True)
-        await client.add_user(telegram_id=user_id, username=username)
+        await client.add_user(telegram_id=user_id, username=username, promo=start_promo)
         await message.delete()
 
 
@@ -57,8 +67,14 @@ async def about_handler(message: Message):
 @router.message(Text('Копить бонусы'))
 async def about_handler(message: Message):
     try:
-        await message.answer(text='Программа лояльности <a href="https://sabyget.ru/go/FmJT7M">Возьми Салат</a>',
-                             parse_mode='HTML')
+        promo = await client.get_user_promo(telegram_id=message.from_user.id)
+        match promo:
+            case "x10group":
+                await message.answer(text='Программа лояльности <a href="https://sabyget.ru/go/lHTSvj">Возьми Салат</a>',
+                                     parse_mode='HTML')
+            case _:
+                await message.answer(text='Программа лояльности <a href="https://sabyget.ru/go/FmJT7M">Возьми Салат</a>',
+                                     parse_mode='HTML')
         await message.delete()
     except Exception as e:
         print(e)
